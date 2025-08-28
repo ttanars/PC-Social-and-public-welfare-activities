@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC | Social and public welfare activities</title> <link rel="shortcut icon" type="image/png" href="https://img2.pic.in.th/pic/Pakchong_School-removebg-preview.png">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Font Awesome (for new footer) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Google Fonts: TH Sarabun -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- DataTables CSS for Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.min.css">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f8f9fa;
+        }
+        /* Refined Card Styles */
+        .card {
+            border: none;
+            border-radius: 0.75rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05) !important;
+            transition: transform 0.2s ease-in-out;
+            color: white;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            background-color: transparent;
+            border-bottom: 1px solid #dee2e6;
+            font-weight: 700;
+        }
+        .card-icon {
+            font-size: 4rem;
+            opacity: 0.2;
+            position: absolute;
+            right: 20px;
+            bottom: 10px;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        .dataTables_wrapper .form-control, .dataTables_wrapper .form-select {
+            font-size: 0.875rem;
+        }
+        /* Updated Loading Overlay Style */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        #loading-overlay img {
+            width: 150px;
+        }
+        th {
+            vertical-align: middle;
+        }
+        .student-img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: transform 0.2s ease-in-out; /* Add animation */
+            cursor: pointer; /* Change cursor to pointer */
+        }
+        .student-img:hover {
+            transform: scale(1.5); /* Zoom in on hover */
+            z-index: 10;
+            position: relative;
+        }
+        
+        /* New Card Backgrounds */
+        .bg-gradient-excellent {
+            background: linear-gradient(45deg, #28a745, #218838);
+        }
+        .bg-gradient-good {
+            background: linear-gradient(45deg, #007bff, #0069d9);
+        }
+        .bg-gradient-pass {
+            background: linear-gradient(45deg, #17a2b8, #138496);
+        }
+        .bg-gradient-fail {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+        }
+
+
+        /* Modern Form Controls */
+        .form-control, .form-select {
+            border-radius: 0.5rem;
+            border-color: #ced4da;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        /* Refined Table Hover */
+        .table-hover > tbody > tr:hover {
+            --bs-table-accent-bg: rgba(0, 0, 0, 0.04);
+        }
+
+        /* Interpretation Badge Styles */
+        .badge-interpretation {
+            padding: 0.4em 0.8em;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            color: white;
+            font-size: 0.8em;
+        }
+        .bg-badge-excellent { background-color: #28a745; }
+        .bg-badge-good { background-color: #007bff; }
+        .bg-badge-pass { background-color: #17a2b8; }
+        .bg-badge-fail { background-color: #dc3545; }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" style="display: none;">
+        <img src="https://media1.giphy.com/media/mBMdeZHp6bqfkL4vBI/giphy.gif" alt="Loading...">
+    </div>
+
+    <!-- Marquee -->
+    <div class="container text-center mt-3 mb-3">
+        <marquee behavior="scroll" direction="left" style="color:#000000; font-size: 18px;margin-top: 2px; margin-bottom: 2px;" onmouseover="this.stop();" onmouseout="this.start();"><h3 style="margin-top: 2px; margin-bottom: 4px;"><img src="https://lh5.googleusercontent.com/d/1cD2nVKNscJg1DJPnkaakah7Nz4ez_BZS" height="12" width="25" > ยินดีต้อนรับเข้าสู่ระบบกิจกรรมเพื่อสังคมและสาธารณะประโยชน์ของนักเรียน โรงเรียนปากช่อง :: ออกแบบและพัฒนาโดย KT | Tanasarn Sirak <img src="https://lh5.googleusercontent.com/d/1cD2nVKNscJg1DJPnkaakah7Nz4ez_BZS" height="12" width="25" ></h3></marquee>
+    </div>
+
+    <div class="container-fluid p-4">
+        <!-- Dashboard Header -->
+        <header class="d-flex align-items-center pb-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+                <i class="bi bi-pie-chart-fill fs-2 me-3"></i>
+                <span class="fs-4 fw-bold">Dashboard สรุปผลการประเมิน</span>
+            </a>
+        </header>
+
+        <!-- Summary Cards -->
+        <div class="row mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card bg-gradient-excellent shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs fw-bold text-uppercase mb-1">ดีเยี่ยม</div>
+                                <div id="summary-excellent" class="h4 mb-0 fw-bold">0</div>
+                            </div>
+                            <div class="col-auto"><i class="bi bi-award-fill card-icon"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card bg-gradient-good shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs fw-bold text-uppercase mb-1">ดี</div>
+                                <div id="summary-good" class="h4 mb-0 fw-bold">0</div>
+                            </div>
+                            <div class="col-auto"><i class="bi bi-hand-thumbs-up-fill card-icon"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card bg-gradient-pass shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs fw-bold text-uppercase mb-1">ผ่าน</div>
+                                <div id="summary-pass" class="h4 mb-0 fw-bold">0</div>
+                            </div>
+                            <div class="col-auto"><i class="bi bi-check-circle-fill card-icon"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card bg-gradient-fail shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs fw-bold text-uppercase mb-1">ไม่ผ่าน</div>
+                                <div id="summary-fail" class="h4 mb-0 fw-bold">0</div>
+                            </div>
+                            <div class="col-auto"><i class="bi bi-x-circle-fill card-icon"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="row mb-4">
+            <div class="col-lg-5 mb-4">
+                <div class="card shadow h-100 text-dark">
+                    <div class="card-header py-3"><i class="bi bi-pie-chart me-2"></i>สัดส่วนผลการประเมิน</div>
+                    <div class="card-body d-flex justify-content-center align-items-center"><canvas id="pieChart"></canvas></div>
+                </div>
+            </div>
+            <div class="col-lg-7 mb-4">
+                <div class="card shadow h-100 text-dark">
+                    <div class="card-header py-3"><i class="bi bi-bar-chart-line me-2"></i>จำนวนนักเรียนตามผลประเมิน (รายชั้น)</div>
+                    <div class="card-body"><canvas id="barChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters & DataTable -->
+        <div class="card shadow mb-4 text-dark">
+            <div class="card-header py-3">
+                <h6 class="m-0 fw-bold text-primary"><i class="bi bi-table me-2"></i>ตารางข้อมูลนักเรียน</h6>
+            </div>
+            <div class="card-body">
+                <!-- Filter Controls -->
+                <div class="row mb-3 g-3">
+                    <div class="col-md-3">
+                        <label for="nameFilter" class="form-label">ค้นหาชื่อ-สกุล:</label>
+                        <input type="text" id="nameFilter" class="form-control" placeholder="พิมพ์เพื่อค้นหา...">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="classFilter" class="form-label">ชั้น:</label>
+                        <select id="classFilter" class="form-select"><option value="">-- ทุกชั้น --</option></select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="roomFilter" class="form-label">ห้อง:</label>
+                        <select id="roomFilter" class="form-select"><option value="">-- ทุกห้อง --</option></select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="summaryFilter" class="form-label">ผลการประเมิน:</label>
+                        <select id="summaryFilter" class="form-select"><option value="">-- ทั้งหมด --</option></select>
+                    </div>
+                </div>
+                <!-- DataTable -->
+                <div class="table-responsive">
+                    <table id="reportTable" class="table table-bordered table-hover" style="width:100%">
+                        <thead class="table-light text-center">
+                            <tr>
+                                <th>รูป</th>
+                                <th class="text-start">ชื่อ-สกุล</th>
+                                <th>ชั้น</th>
+                                <th>ห้อง</th>
+                                <th>เลขที่</th>
+                                <th data-bs-toggle="tooltip" title="กิจกรรมหน้าเสาธง">3.1</th>
+                                <th data-bs-toggle="tooltip" title="คะแนนพฤติกรรม">3.2</th>
+                                <th data-bs-toggle="tooltip" title="จิตอาสา">3.3</th>
+                                <th>สรุป</th>
+                                <th>แปลผล</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer style="text-align: center;background-color:#faff99; padding: 10px 0; margin-top: auto; border-top: 1px solid #e0e0e0; font-size: 0.9em; color: #555; width: 100%;">
+        :: Created and Develop by KT|Tanasarn Sirak ::
+        <div class="container text-center">
+        <a href="https://line.me/ti/p/3F7VGrqgUr" target="_blank"><i class="fa-solid fa-comments"></i></a> <a style="color:red;text-decoration:none;font-size:12px" href="https://line.me/ti/p/3F7VGrqgUr" target="_blank"> สอบถาม/แจ้งปัญหา :: <span style="font-size:12px;color:black">KT | Tanasarn Sirak © <span class="buddhist-year"></span></a>
+        </div>
+        <div class="text-center mt-3">
+        :: จำนวนผู้ใช้งาน ::
+        <a href="https://www.freecounterstat.com" title="website counter"><img src="https://counter1.optistats.ovh/private/freecounterstat.php?c=uwgfnf4ee1nu15h57t14a9pnpf2h58za" border="0" title="website counter" alt="website counter"></a>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS for Bootstrap 5 -->
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // --- INITIALIZATION ---
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwxiC80umtTw2lSXQQDgYxviRz90S8PNv7oTH6C1YAXKngNor6iUaqNC17vsciZ3WFLJw/exec';
+            let table, pieChart, barChart;
+            let fullDataSet = [];
+
+            // Initialize Bootstrap Tooltips
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+            // --- CHART CONFIGURATION ---
+            const chartColors = {
+                'ดีเยี่ยม': 'rgba(25, 135, 84, 0.7)',
+                'ดี': 'rgba(13, 110, 253, 0.7)',
+                'ผ่าน': 'rgba(13, 202, 240, 0.7)',
+                'ไม่ผ่าน': 'rgba(220, 53, 69, 0.7)'
+            };
+            function createPieChart() {
+                const ctx = document.getElementById('pieChart').getContext('2d');
+                pieChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['ดีเยี่ยม', 'ดี', 'ผ่าน', 'ไม่ผ่าน'],
+                        datasets: [{
+                            data: [0, 0, 0, 0],
+                            backgroundColor: Object.values(chartColors),
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
+            }
+
+            function createBarChart() {
+                const ctx = document.getElementById('barChart').getContext('2d');
+                barChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: [], // e.g., ['ม.1', 'ม.2', ...]
+                        datasets: [
+                            { label: 'ดีเยี่ยม', data: [], backgroundColor: chartColors['ดีเยี่ยม'] },
+                            { label: 'ดี', data: [], backgroundColor: chartColors['ดี'] },
+                            { label: 'ผ่าน', data: [], backgroundColor: chartColors['ผ่าน'] },
+                            { label: 'ไม่ผ่าน', data: [], backgroundColor: chartColors['ไม่ผ่าน'] }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } }
+                    }
+                });
+            }
+
+            // --- DATA HANDLING & UI UPDATES ---
+            function updateDashboard(data) {
+                if (!pieChart || !barChart) return;
+                const summaryCounts = { 'ดีเยี่ยม': 0, 'ดี': 0, 'ผ่าน': 0, 'ไม่ผ่าน': 0 };
+                data.forEach(row => {
+                    const interpretation = typeof row.interpretation === 'string' ? row.interpretation.trim() : row.interpretation;
+                    if (summaryCounts.hasOwnProperty(interpretation)) {
+                        summaryCounts[interpretation]++;
+                    }
+                });
+                // Update cards
+                $('#summary-excellent').text(summaryCounts['ดีเยี่ยม']);
+                $('#summary-good').text(summaryCounts['ดี']);
+                $('#summary-pass').text(summaryCounts['ผ่าน']);
+                $('#summary-fail').text(summaryCounts['ไม่ผ่าน']);
+
+                // Update Pie Chart
+                pieChart.data.datasets[0].data = Object.values(summaryCounts);
+                pieChart.update();
+
+                // Update Bar Chart
+                const classData = {};
+                const classes = [...new Set(fullDataSet.map(item => item.class))].sort();
+                classes.forEach(c => {
+                    classData[c] = { 'ดีเยี่ยม': 0, 'ดี': 0, 'ผ่าน': 0, 'ไม่ผ่าน': 0 };
+                });
+                data.forEach(row => {
+                    const interpretation = typeof row.interpretation === 'string' ? row.interpretation.trim() : row.interpretation;
+                    if (classData[row.class] && classData[row.class].hasOwnProperty(interpretation)) {
+                        classData[row.class][interpretation]++;
+                    }
+                });
+
+                barChart.data.labels = classes;
+                barChart.data.datasets[0].data = classes.map(c => classData[c]['ดีเยี่ยม']);
+                barChart.data.datasets[1].data = classes.map(c => classData[c]['ดี']);
+                barChart.data.datasets[2].data = classes.map(c => classData[c]['ผ่าน']);
+                barChart.data.datasets[3].data = classes.map(c => classData[c]['ไม่ผ่าน']);
+                barChart.update();
+            }
+
+            function populateFilters(data) {
+                const classes = [...new Set(data.map(item => item.class))].sort();
+                const rooms = [...new Set(data.map(item => item.room))].sort();
+                const summaries = [...new Set(data.map(item => item.interpretation))].sort();
+
+                classes.forEach(c => $('#classFilter').append(`<option value="${c}">${c}</option>`));
+                rooms.forEach(r => {
+                    if(r) {
+                        $('#roomFilter').append(`<option value="${r}">${r}</option>`)
+                    }
+                });
+                summaries.forEach(s => {
+                    if(s) { 
+                        $('#summaryFilter').append(`<option value="${s}">${s}</option>`)
+                    }
+                });
+            }
+            
+            // --- DATA FETCHING ---
+            $('#loading-overlay').show(); // Show loading overlay
+
+            fetch(SCRIPT_URL)
+                .then(response => response.json())
+                .then(result => {
+                    if (!result.success) throw new Error(result.message);
+                    
+                    fullDataSet = result.data;
+                    $('#loading-overlay').hide(); // Hide loading overlay
+                    
+                    // ---- FIX: Correct Initialization Order ----
+                    // 1. Create empty charts first
+                    createPieChart();
+                    createBarChart();
+                    
+                    // 2. Update Dashboard with all data immediately
+                    updateDashboard(fullDataSet);
+
+                    // 3. Initialize the DataTable
+                    initializeDataTable(fullDataSet);
+                    
+                    // 4. Populate filters
+                    populateFilters(fullDataSet);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    $('#loading-overlay').hide();
+                    Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาด', text: error.message });
+                });
+            // --- DATATABLE INITIALIZATION ---
+            function initializeDataTable(data) {
+                table = $('#reportTable').DataTable({
+                    data: data,
+                    responsive: true,
+                    columns: [
+                        { data: 'imageUrl', className: 'text-center', render: (d) => `<img src="${(d && d.startsWith('http')) ? d : 'https://placehold.co/50x50/EFEFEF/AAAAAA&text=N/A'}" class="student-img" alt="รูปนักเรียน">` },
+                        { data: 'fullName', className: 'text-start' },
+                        { data: 'class', className: 'text-center' },
+                        { data: 'room', className: 'text-center' },
+                        { data: 'classNo', className: 'text-center' },
+                        { data: 'score3_1', className: 'text-center' },
+                        { data: 'score3_2', className: 'text-center' },
+                        { data: 'score3_3', className: 'text-center' },
+                        { data: 'summary', className: 'text-center' },
+                        { 
+                            data: 'interpretation', 
+                            className: 'text-center',
+                            render: function(data, type, row) {
+                                if (type === 'display') {
+                                    let badgeClass = '';
+                                    switch (data) {
+                                        case 'ดีเยี่ยม':
+                                            badgeClass = 'bg-badge-excellent';
+                                            break;
+                                        case 'ดี':
+                                            badgeClass = 'bg-badge-good';
+                                            break;
+                                        case 'ผ่าน':
+                                            badgeClass = 'bg-badge-pass';
+                                            break;
+                                        case 'ไม่ผ่าน':
+                                            badgeClass = 'bg-badge-fail';
+                                            break;
+                                        default:
+                                            return data; // Return text if no match
+                                    }
+                                    return `<span class="badge-interpretation ${badgeClass}">${data}</span>`;
+                                }
+                                return data;
+                            }
+                        }
+                    ],
+                    language: { 
+                        "decimal":        "",
+                        "emptyTable":     "ไม่มีข้อมูลในตาราง",
+                        "info":           "แสดง _START_ ถึง _END_ จาก _TOTAL_ รายการ",
+                        "infoEmpty":      "แสดง 0 ถึง 0 จาก 0 รายการ",
+                        "infoFiltered":   "(กรองจากทั้งหมด _MAX_ รายการ)",
+                        "infoPostFix":    "",
+                        "thousands":      ",",
+                        "lengthMenu":     "แสดง _MENU_ รายการ",
+                        "loadingRecords": "กำลังโหลด...",
+                        "processing":     "",
+                        "search":         "ค้นหา:",
+                        "zeroRecords":    "ไม่พบรายการที่ตรงกัน",
+                        "paginate": {
+                            "first":      "หน้าแรก",
+                            "last":       "หน้าสุดท้าย",
+                            "next":       "ถัดไป",
+                            "previous":   "ก่อนหน้า"
+                        },
+                        "aria": {
+                            "sortAscending":  ": เรียงจากน้อยไปมาก",
+                            "sortDescending": ": เรียงจากมากไปน้อย"
+                        }
+                    }
+                });
+                // --- EVENT LISTENERS ---
+                $('#nameFilter').on('keyup', () => table.column(1).search($('#nameFilter').val()).draw());
+                $('#classFilter').on('change', () => table.column(2).search($('#classFilter').val()).draw());
+                $('#roomFilter').on('change', () => table.column(3).search($('#roomFilter').val()).draw());
+                $('#summaryFilter').on('change', () => table.column(9).search($('#summaryFilter').val()).draw());
+
+                table.on('draw.dt', function () {
+                    const filteredData = table.rows({ search: 'applied' }).data().toArray();
+                    updateDashboard(filteredData);
+                });
+                // Add Event Listener for image click
+                $('#reportTable tbody').on('click', 'img.student-img', function() {
+                    const src = $(this).attr('src');
+                    const name = $(this).closest('tr').find('td:nth-child(2)').text(); 
+                    Swal.fire({
+                        title: name,
+                        imageUrl: src,
+                        imageWidth: 200,
+                        imageAlt: 'รูปนักเรียน'
+                    });
+                });
+            }
+
+            // Calculate and display Buddhist year
+            const currentYear = new Date().getFullYear();
+            const buddhistYear = currentYear + 543;
+            $('.buddhist-year').text(buddhistYear);
+        });
+    </script>
+</body>
+</html>
